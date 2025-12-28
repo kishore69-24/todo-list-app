@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.falling-char {
+    position: fixed;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    z-index: 9999;
+    animation: fallDown 3s linear forwards;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+    user-select: none;
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translateY(-50px) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(calc(50vh - 25px)) rotate(180deg) scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(calc(100vh + 50px)) rotate(360deg) scale(0.8);
+        opacity: 0;
+    }
+}
+
+.container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    width: 100%;
+    max-width: 600px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #333;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 1.1em;
+}
+
+.input-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.task-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    margin-top: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.suggestion-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.suggestion-item:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.suggestion-item:hover,
+.suggestion-item.highlighted {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: translateX(5px);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.task-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.btn {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:active {
+    animation: buttonClick 0.4s ease;
+}
+
+@keyframes buttonClick {
+    0% {
+        transform: scale(1) translateY(0);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    50% {
+        transform: scale(0.92) translateY(2px);
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.6);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.btn-secondary:hover {
+    background: #e0e0e0;
+}
+
+.filter-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9em;
+}
+
+.filter-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+}
+
+.task-list {
+    list-style: none;
+    margin-bottom: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.task-item {
+    background: #f8f9fa;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.task-item:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+}
+
+.task-item.completing {
+    animation: taskFallDown 1.2s ease-in forwards;
+    pointer-events: none;
+    position: relative;
+    z-index: 10000;
+}
+
+@keyframes taskFallDown {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+        filter: brightness(1) blur(0px);
+    }
+    30% {
+        transform: translateY(50px) rotate(90deg) scale(0.95);
+        opacity: 0.9;
+        filter: brightness(1.2) blur(1px);
+    }
+    60% {
+        transform: translateY(150px) rotate(180deg) scale(0.8);
+        opacity: 0.6;
+        filter: brightness(1.5) blur(2px);
+    }
+    100% {
+        transform: translateY(calc(100vh + 200px)) rotate(360deg) scale(0.3);
+        opacity: 0;
+        filter: brightness(2) blur(5px);
+    }
+}
+
+.task-item.completed {
+    opacity: 0.6;
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.task-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #667eea;
+}
+
+.task-icon {
+    font-size: 1.2em;
+    animation: iconAppear 0.5s ease;
+    display: inline-block;
+}
+
+@keyframes iconAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+    }
+    50% {
+        transform: scale(1.2) rotate(10deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.task-item.completed .task-icon {
+    display: none;
+}
+
+.task-text {
+    flex: 1;
+    font-size: 1em;
+    color: #333;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.task-text:hover {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.task-edit-input {
+    flex: 1;
+    padding: 8px;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: inherit;
+    outline: none;
+}
+
+.task-edit {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s;
+}
+
+.task-edit:hover {
+    background: #45a049;
+    transform: scale(1.05);
+}
+
+.task-delete {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s;
+}
+
+.task-delete:hover {
+    background: #ff5252;
+    transform: scale(1.05);
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 2px solid #e0e0e0;
+}
+
+#taskCount {
+    color: #666;
+    font-weight: 600;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
+
+.empty-state p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
